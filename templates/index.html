@@ -297,6 +297,74 @@
       border-top: 1px solid var(--border);
       margin: 0;
     }
+
+    /* Supported languages dropdown */
+    .lang-dropdown {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .lang-dropdown summary {
+      padding: 14px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-dropdown summary::-webkit-details-marker { display: none; }
+
+    .lang-dropdown summary::after {
+      content: '▸';
+      margin-left: auto;
+      transition: transform 0.2s;
+      font-size: 0.75rem;
+    }
+
+    .lang-dropdown[open] summary::after { transform: rotate(90deg); }
+
+    .lang-dropdown[open] summary {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lang-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 16px 20px;
+    }
+
+    .lang-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .lang-tag .script-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      background: var(--violet-pale);
+      color: var(--violet-dark);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 2px;
+    }
   </style>
 </head>
 <body>
@@ -328,6 +396,12 @@
     <button class="detect-btn" id="detect-btn">Detect Language</button>
     <div class="error-msg" id="error-msg"></div>
   </div>
+
+  <!-- Supported languages dropdown -->
+  <details class="lang-dropdown" id="lang-dropdown">
+    <summary id="lang-summary">Supported languages</summary>
+    <div class="lang-grid" id="lang-grid"></div>
+  </details>
 
   <!-- Loading -->
   <div class="spinner" id="spinner">Detecting...</div>
@@ -381,12 +455,27 @@
     .then(r => r.json())
     .then(d => {
       const acc = d.accuracy ? (d.accuracy * 100).toFixed(1) : null;
-      const f1 = d.macro_f1 ? (d.macro_f1 * 100).toFixed(1) : null;
       const model = d.model_name || '';
       if (acc) {
         document.getElementById('meta-accuracy').textContent =
-          `17 languages · character n-gram patterns · ${acc}% accuracy · ${model}`;
+          `22 languages · character n-gram patterns · ${acc}% accuracy · ${model}`;
       }
+    })
+    .catch(() => {});
+
+  // Populate supported languages dropdown from API
+  fetch('/api/languages')
+    .then(r => r.json())
+    .then(langs => {
+      const grid = document.getElementById('lang-grid');
+      const summary = document.getElementById('lang-summary');
+      summary.textContent = `${langs.length} supported languages`;
+      langs.forEach(l => {
+        const tag = document.createElement('span');
+        tag.className = 'lang-tag';
+        tag.innerHTML = `${l.flag} ${l.language} <span class="script-label">${l.script}</span>`;
+        grid.appendChild(tag);
+      });
     })
     .catch(() => {});
 
