@@ -226,14 +226,18 @@ az webapp deployment source config-zip \
 
 ## 11. CI/CD
 
-GitHub Actions runs on every push and pull request to `main`:
+GitHub Actions runs on every push and pull request to `main`. Two jobs run in sequence:
 
+**test** — runs on all pushes and PRs:
 1. Checkout code
 2. Set up Python 3.11
 3. Install dependencies
 4. Run `pytest tests/ -v`
 
-See `.github/workflows/ci.yml`.
+**deploy** — runs only on push to `main`, after tests pass:
+1. Deploy to Azure App Service via publish profile (`AZURE_WEBAPP_PUBLISH_PROFILE` secret)
+
+Every merged PR that passes tests is automatically live at [language-detector-xoc.azurewebsites.net](https://language-detector-xoc.azurewebsites.net). See `.github/workflows/ci.yml`.
 
 ## 12. Design decisions
 
