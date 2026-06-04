@@ -89,10 +89,11 @@ every text can be represented as a combination of character sequences, even if t
 words are new.
 
 `analyzer='char_wb'` respects word boundaries, which is important: word-boundary
-patterns (how words start and end) are highly distinctive across languages. The German
-trigram `sch` and the Spanish bigram `qu` are reliable language signals regardless of
-which words contain them. `ngram_range=(1, 3)` captures single characters (script
-detection), bigrams (letter combinations), and trigrams (morphological patterns).
+patterns (how words start and end) are highly distinctive across languages. The Turkish
+suffix `lar`, the Spanish bigram `qu`, and the French trigram `ion` are reliable
+language signals regardless of which words contain them. `ngram_range=(1, 3)` captures
+single characters (script detection), bigrams (letter combinations), and trigrams
+(morphological patterns).
 
 ## 5. Models
 
@@ -129,10 +130,10 @@ language detection is expected with character n-grams. The interesting output is
 n-gram weight analysis: what character sequences did the model learn are most
 characteristic of each language?
 
-- **Arabic**: patterns no Latin script language shares
-- **Russian**: Cyrillic patterns distinct from Greek
+- **Arabic**: script characters completely disjoint from Latin, Cyrillic, or CJK
+- **Russian**: Cyrillic patterns distinct from Arabic, Thai, and CJK scripts
 - **Spanish**: `que`, `ción`, `es` — patterns every Spanish speaker recognises
-- **German**: `sch`, `ung`, `ein` — morphological fingerprints
+- **Turkish**: `lar`, `ler`, `ını` — vowel harmony suffix patterns
 
 See `plots/04_top_ngrams_per_language.png` and Cell 8 of `notebook.ipynb`.
 
@@ -161,9 +162,9 @@ See `plots/04_top_ngrams_per_language.png` and Cell 8 of `notebook.ipynb`.
   "confidence": 0.9873,
   "confidence_pct": 99,
   "top_languages": [
-    { "rank": 1, "language": "Spanish", "confidence": 0.9873, "confidence_pct": 99, "flag_emoji": "🇪🇸" },
-    { "rank": 2, "language": "Portuguese", "confidence": 0.0094, "confidence_pct": 1, "flag_emoji": "🇵🇹" },
-    { "rank": 3, "language": "Italian", "confidence": 0.0018, "confidence_pct": 0, "flag_emoji": "🇮🇹" }
+    { "rank": 1, "language": "Spanish",   "confidence": 0.9873, "confidence_pct": 99, "flag_emoji": "🇪🇸" },
+    { "rank": 2, "language": "Portugese", "confidence": 0.0094, "confidence_pct": 1,  "flag_emoji": "🇵🇹" },
+    { "rank": 3, "language": "French",    "confidence": 0.0018, "confidence_pct": 0,  "flag_emoji": "🇫🇷" }
   ],
   "top_ngrams": [
     { "ngram": "que", "weight": 2.14, "interpretation": "'que' is a strong indicator of Spanish" },
@@ -178,7 +179,7 @@ See `plots/04_top_ngrams_per_language.png` and Cell 8 of `notebook.ipynb`.
 
 ### `GET /api/languages`
 
-Returns all 17 supported languages with flag emoji, script type, and description.
+Returns all 22 supported languages with flag emoji, script type, and description.
 
 ### `GET /api/model-info`
 
@@ -240,7 +241,7 @@ See `.github/workflows/ci.yml`.
 
 Character n-grams have no out-of-vocabulary problem. A word n-gram model cannot
 represent text containing words it has never seen during training — a significant
-limitation given the vocabulary breadth of 17 languages. Character sequences are
+limitation given the vocabulary breadth of 22 languages. Character sequences are
 universal: every text is representable as a combination of character n-grams,
 regardless of topic or vocabulary. This is why character features dominate language
 detection benchmarks.
@@ -249,9 +250,10 @@ detection benchmarks.
 
 `char_wb` inserts word-boundary markers before extracting n-grams, so n-grams never
 span word boundaries. This matters because the patterns at word beginnings and endings
-are among the most language-discriminative features. German words often end in `-ung`,
-Spanish verbs end in `-ar`, `-er`, `-ir`. The `char` analyzer would produce n-grams
-that span spaces, conflating word-boundary patterns with mid-word patterns.
+are among the most language-discriminative features. Turkish words carry vowel-harmony
+suffixes at their ends, Spanish verbs end in `-ar`, `-er`, `-ir`, and Estonian words
+start with distinctive vowel clusters. The `char` analyzer would produce n-grams that
+span spaces, conflating word-boundary patterns with mid-word patterns.
 
 **Why three models**
 
