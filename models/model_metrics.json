@@ -1,0 +1,131 @@
+{
+  "model_name": "LinearSVC",
+  "accuracy": 0.9889,
+  "macro_f1": 0.989,
+  "per_language": {
+    "Arabic": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "Chinese": {
+      "precision": 0.99,
+      "recall": 0.995,
+      "f1": 0.9925
+    },
+    "Dutch": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "English": {
+      "precision": 0.8959,
+      "recall": 0.99,
+      "f1": 0.9406
+    },
+    "Estonian": {
+      "precision": 0.995,
+      "recall": 0.995,
+      "f1": 0.995
+    },
+    "French": {
+      "precision": 0.9707,
+      "recall": 0.995,
+      "f1": 0.9827
+    },
+    "Hindi": {
+      "precision": 1.0,
+      "recall": 0.985,
+      "f1": 0.9924
+    },
+    "Indonesian": {
+      "precision": 1.0,
+      "recall": 0.975,
+      "f1": 0.9873
+    },
+    "Japanese": {
+      "precision": 1.0,
+      "recall": 0.995,
+      "f1": 0.9975
+    },
+    "Korean": {
+      "precision": 1.0,
+      "recall": 0.99,
+      "f1": 0.995
+    },
+    "Latin": {
+      "precision": 0.9557,
+      "recall": 0.97,
+      "f1": 0.9628
+    },
+    "Persian": {
+      "precision": 1.0,
+      "recall": 0.99,
+      "f1": 0.995
+    },
+    "Portugese": {
+      "precision": 0.9754,
+      "recall": 0.99,
+      "f1": 0.9826
+    },
+    "Pushto": {
+      "precision": 1.0,
+      "recall": 0.965,
+      "f1": 0.9822
+    },
+    "Romanian": {
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1": 0.9899
+    },
+    "Russian": {
+      "precision": 0.99,
+      "recall": 0.995,
+      "f1": 0.9925
+    },
+    "Spanish": {
+      "precision": 0.9949,
+      "recall": 0.985,
+      "f1": 0.9899
+    },
+    "Swedish": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "Tamil": {
+      "precision": 1.0,
+      "recall": 0.99,
+      "f1": 0.995
+    },
+    "Thai": {
+      "precision": 1.0,
+      "recall": 0.995,
+      "f1": 0.9975
+    },
+    "Turkish": {
+      "precision": 1.0,
+      "recall": 0.99,
+      "f1": 0.995
+    },
+    "Urdu": {
+      "precision": 1.0,
+      "recall": 0.985,
+      "f1": 0.9924
+    }
+  },
+  "all_models": {
+    "LinearSVC": {
+      "accuracy": 0.9889,
+      "macro_f1": 0.989
+    },
+    "LogisticRegression": {
+      "accuracy": 0.9843,
+      "macro_f1": 0.9847
+    },
+    "ComplementNB": {
+      "accuracy": 0.9798,
+      "macro_f1": 0.9804
+    }
+  }
+}

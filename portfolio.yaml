@@ -8,9 +8,9 @@ tech_stack: Python, scikit-learn, TF-IDF, LinearSVC, LogisticRegression, Complem
 repo_url: https://github.com/xavier-oc-programming/language-detector
 live_url: https://language-detector-xoc.azurewebsites.net
 demo_url: https://language-detector-xoc.azurewebsites.net
-short_description: Detects the language of any text across 17 languages using character n-gram TF-IDF features. Returns the top 3 languages with confidence scores and a plain-English explanation of the character patterns driving the detection.
+short_description: Detects the language of any text across 22 languages using character n-gram TF-IDF features. Returns the top 3 languages with confidence scores and a plain-English explanation of the character patterns driving the detection.
 full_description: >
-  A language detection system trained on 22,000 text samples across 17 languages
+  A language detection system trained on 22,000 text samples across 22 languages
   using TF-IDF character n-grams (analyzer=char_wb, ngram_range=(1,3)).
   Character-level features capture script patterns, morphological patterns, and
   character combinations that are language-specific regardless of vocabulary —
@@ -18,7 +18,7 @@ full_description: >
 
   Three classifiers are compared — LinearSVC, LogisticRegression, and ComplementNB —
   consistent with the approach in the spam classifier project. The best model is
-  selected by macro F1 across all 17 languages.
+  selected by macro F1 across all 22 languages.
 
   Every detection response includes a plain-English explanation of the top character
   n-grams driving the result. This follows the same translation-layer pattern used in
@@ -45,6 +45,8 @@ challenges: >
   without additional computation.
 
 results: >
-  TBD — populate after running train.py. Include overall accuracy, macro F1, and
-  the top 3 most distinctive n-grams for English, Spanish, and one non-Latin
-  script language.
+  Best model: LinearSVC (CalibratedClassifierCV). Accuracy 98.89%, macro F1 0.989
+  across 22 languages. Easiest: Arabic, Dutch, Swedish (F1 = 1.000). Hardest:
+  English (F1 = 0.940, precision 0.896) — most generic Latin-script language.
+  Top Spanish n-grams: "que", "es", "ció". Top Arabic signals: Arabic script
+  characters with zero overlap against Latin/Cyrillic/CJK languages.

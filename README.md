@@ -1,7 +1,7 @@
 # language-detector
 
 Detects the language of any text using character n-gram TF-IDF features.
-Identifies 17 languages and explains which character patterns drove the
+Identifies 22 languages and explains which character patterns drove the
 detection — showing the top n-grams that are most characteristic of the
 detected language.
 
@@ -65,20 +65,21 @@ language-detector/
 
 ## 3. Dataset
 
-Language Detection Dataset — ~22,000 text samples across 17 languages.
+Language Detection Dataset — 22,000 text samples across 22 languages (1,000 per language).
 
-| Language   | Language   | Language  |
-|------------|------------|-----------|
-| English    | Italian    | Russian   |
-| Spanish    | Portuguese | Arabic    |
-| French     | Dutch      | Turkish   |
-| German     | Swedish    | Greek     |
-| Hindi      | Danish     | Tamil     |
-| Malayalam  | Kannada    |           |
+| Language   | Language   | Language   |
+|------------|------------|------------|
+| English    | French     | Spanish    |
+| Dutch      | Swedish    | Estonian   |
+| Indonesian | Romanian   | Turkish    |
+| Portugese  | Latin      | Russian    |
+| Arabic     | Persian    | Urdu       |
+| Pushto     | Hindi      | Tamil      |
+| Chinese    | Japanese   | Korean     |
+| Thai       |            |            |
 
 Source: [basilb2s/language-detection](https://www.kaggle.com/datasets/basilb2s/language-detection) on Kaggle.
-If Kaggle is unavailable, `train.py` falls back to a GitHub-hosted CSV mirror, then to a
-Wikipedia-generated synthetic dataset.
+If Kaggle is unavailable, `train.py` falls back to the amankharwal GitHub mirror (the version used here, 22 languages).
 
 ## 4. Why character n-grams
 
@@ -107,11 +108,19 @@ The best model by macro F1 is saved and used by the API.
 
 ## 6. Results
 
-*TBD — populate after running `train.py`.*
+**Best model: LinearSVC** (wrapped in CalibratedClassifierCV)
 
-Expected: accuracy above 97%, macro F1 above 0.97. Non-Latin script languages
-(Arabic, Russian, Greek, Hindi, Malayalam, Tamil, Kannada) are typically the
-easiest to detect due to their distinctive character sets.
+| Model | Accuracy | Macro F1 |
+|---|---|---|
+| **LinearSVC** | **98.89%** | **0.989** |
+| LogisticRegression | 98.43% | 0.985 |
+| ComplementNB | 97.98% | 0.980 |
+
+**Easiest to detect:** Arabic, Dutch, Swedish — F1 = 1.000.
+
+**Hardest to detect:** English — F1 = 0.940 (precision 0.896). English is the most generic Latin-script language; it lacks diacritics and shares many character patterns with French, Spanish, and other Latin-script languages.
+
+Non-Latin script languages (Arabic, Persian, Urdu, Pushto, Hindi, Chinese, Japanese, Korean, Thai, Tamil) are the most reliably detected — their character sets are completely disjoint from Latin and Cyrillic, making separation trivial.
 
 ## 7. N-gram analysis
 
@@ -162,7 +171,7 @@ See `plots/04_top_ngrams_per_language.png` and Cell 8 of `notebook.ipynb`.
   ],
   "explanation": "The text was detected as Spanish with 99% confidence...",
   "script_type": "Latin",
-  "model_used": "LogisticRegression",
+  "model_used": "LinearSVC",
   "text_length": 53
 }
 ```

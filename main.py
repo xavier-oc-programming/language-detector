@@ -18,7 +18,7 @@ app = FastAPI(
     description=(
         "Detects the language of any text using character n-gram TF-IDF features. "
         "Returns top 3 languages with confidence scores and an explanation of the "
-        "character patterns driving the detection. Supports 17 languages."
+        "character patterns driving the detection. Supports 22 languages."
     ),
     version="1.0.0",
 )
@@ -68,11 +68,14 @@ _load_models()
 
 FLAG_EMOJIS: dict[str, str] = {
     'English': '🇬🇧', 'Spanish': '🇪🇸', 'French': '🇫🇷',
-    'German': '🇩🇪', 'Italian': '🇮🇹', 'Portuguese': '🇵🇹',
-    'Dutch': '🇳🇱', 'Swedish': '🇸🇪', 'Danish': '🇩🇰',
-    'Russian': '🇷🇺', 'Arabic': '🇸🇦', 'Turkish': '🇹🇷',
-    'Greek': '🇬🇷', 'Hindi': '🇮🇳', 'Tamil': '🇮🇳',
-    'Kannada': '🇮🇳', 'Malayalam': '🇮🇳',
+    'Dutch': '🇳🇱', 'Swedish': '🇸🇪', 'Estonian': '🇪🇪',
+    'Indonesian': '🇮🇩', 'Romanian': '🇷🇴', 'Turkish': '🇹🇷',
+    'Portugese': '🇵🇹', 'Latin': '🏛️',
+    'Russian': '🇷🇺',
+    'Arabic': '🇸🇦', 'Persian': '🇮🇷', 'Urdu': '🇵🇰', 'Pushto': '🇦🇫',
+    'Hindi': '🇮🇳', 'Tamil': '🇱🇰',
+    'Chinese': '🇨🇳', 'Japanese': '🇯🇵', 'Korean': '🇰🇷',
+    'Thai': '🇹🇭',
 }
 
 # ── Pydantic models ────────────────────────────────────────────────────────────
