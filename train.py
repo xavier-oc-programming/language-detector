@@ -54,14 +54,18 @@ def load_data() -> pd.DataFrame:
     except Exception as e:
         print(f"kagglehub unavailable: {e}")
 
-    # Try direct CSV URL
-    try:
-        url = 'https://raw.githubusercontent.com/lyteabovenyte/NLP_Classification/main/Language_Detection.csv'
-        df = pd.read_csv(url)
-        print(f"Loaded from GitHub URL: {len(df)} rows")
-        return df
-    except Exception as e:
-        print(f"GitHub URL unavailable: {e}")
+    # Try multiple GitHub mirrors in order
+    fallback_urls = [
+        'https://raw.githubusercontent.com/amankharwal/Website-data/master/dataset.csv',
+        'https://raw.githubusercontent.com/lyteabovenyte/NLP_Classification/main/Language_Detection.csv',
+    ]
+    for url in fallback_urls:
+        try:
+            df = pd.read_csv(url)
+            print(f"Loaded from {url}: {len(df)} rows")
+            return df
+        except Exception as e:
+            print(f"URL unavailable ({url}): {e}")
 
     # Fall back to synthetic dataset using Wikipedia
     print("Generating synthetic dataset from Wikipedia...")
