@@ -9,7 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -22,3 +21,15 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -v
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: language-detector-xoc
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
