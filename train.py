@@ -168,11 +168,9 @@ def plot_text_length(df: pd.DataFrame):
     order = df.groupby('Language')['text_length'].median().sort_values().index.tolist()
 
     fig, ax = plt.subplots(figsize=(12, 7))
-    df.boxplot(column='text_length', by='Language', ax=ax,
-               vert=False, showfliers=False,
-               order=order)
+    sns.boxplot(data=df, x='text_length', y='Language', order=order,
+                showfliers=False, ax=ax, palette='viridis')
     ax.set_title('Text Length Distribution by Language', fontsize=14, fontweight='bold')
-    plt.suptitle('')
     ax.set_xlabel('Character Count')
     ax.set_ylabel('Language')
     plt.tight_layout()
