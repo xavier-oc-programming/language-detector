@@ -76,11 +76,12 @@ def generate_synthetic_dataset() -> pd.DataFrame:
     import wikipedia
 
     languages_wiki = {
-        'English': 'en', 'Spanish': 'es', 'French': 'fr', 'German': 'de',
-        'Italian': 'it', 'Portuguese': 'pt', 'Dutch': 'nl', 'Swedish': 'sv',
-        'Danish': 'da', 'Russian': 'ru', 'Arabic': 'ar', 'Turkish': 'tr',
-        'Greek': 'el', 'Hindi': 'hi', 'Tamil': 'ta', 'Kannada': 'kn',
-        'Malayalam': 'ml',
+        'English': 'en', 'Spanish': 'es', 'French': 'fr', 'Dutch': 'nl',
+        'Swedish': 'sv', 'Estonian': 'et', 'Indonesian': 'id', 'Romanian': 'ro',
+        'Turkish': 'tr', 'Russian': 'ru', 'Arabic': 'ar', 'Persian': 'fa',
+        'Urdu': 'ur', 'Pushto': 'ps', 'Hindi': 'hi', 'Tamil': 'ta',
+        'Chinese': 'zh', 'Japanese': 'ja', 'Korean': 'ko', 'Thai': 'th',
+        'Latin': 'la', 'Portugese': 'pt',
     }
 
     topics = ['Science', 'History', 'Geography', 'Technology', 'Culture',
@@ -325,7 +326,7 @@ def plot_top_ngrams(vectorizer, model, label_encoder):
         labels = label_encoder.classes_
 
         # Pick 6 most common languages to keep the plot readable
-        featured = ['English', 'Spanish', 'French', 'German', 'Arabic', 'Russian']
+        featured = ['English', 'Spanish', 'French', 'Turkish', 'Arabic', 'Russian']
         featured = [l for l in featured if l in labels]
         indices = [np.where(labels == l)[0][0] for l in featured]
 
