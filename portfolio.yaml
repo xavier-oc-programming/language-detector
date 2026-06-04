@@ -9,16 +9,13 @@ repo_url: https://github.com/xavier-oc-programming/language-detector
 live_url: https://language-detector-xoc.azurewebsites.net
 demo_url: https://language-detector-xoc.azurewebsites.net
 short_description: Detects the language of any text across 22 languages using character n-gram TF-IDF features. Returns the top 3 languages with confidence scores and a plain-English explanation of the character patterns driving the detection.
-full_description: A language detection system trained on 22,000 text samples across 22 languages using TF-IDF character n-grams (analyzer=char_wb, ngram_range=(1,3)). Character-level features capture script patterns, morphological patterns, and character combinations that are language-specific regardless of vocabulary — giving the model no out-of-vocabulary problem.
+full_description: |
+  A language detection system trained on 22,000 text samples across 22 languages using TF-IDF character n-grams (analyzer=char_wb, ngram_range=(1,3)). Character-level features capture script patterns, morphological patterns, and character combinations that are language-specific regardless of vocabulary.
 
   Three classifiers are compared — LinearSVC, LogisticRegression, and ComplementNB — consistent with the approach in the spam classifier project. The best model is selected by macro F1 across all 22 languages.
 
-  Every detection response includes a plain-English explanation of the top character n-grams driving the result. This follows the same translation-layer pattern used in shap_to_language.py (telco churn), text_explainer.py (spam classifier), and risk_explainer.py (credit risk) — the fourth project in the portfolio to implement this principle.
-
+  Every detection response includes a plain-English explanation of the top character n-grams driving the result. This follows the same translation-layer pattern used in shap_to_language.py (telco churn), text_explainer.py (spam classifier), and risk_explainer.py (credit risk).
 problem: Building a language classifier that not only identifies the language but explains which character patterns drove the decision — making the model's internal logic visible to non-technical users.
-
 solution: TF-IDF character n-grams (char_wb, unigrams to trigrams) vectorize the text. Three classifiers are trained and compared by macro F1. explainer.py extracts the top-weighted n-grams from the model's coefficient matrix for the predicted language and translates them into plain English.
-
 challenges: Getting calibrated probability scores from LinearSVC requires wrapping it in CalibratedClassifierCV — LinearSVC has no native predict_proba. The explanation layer requires access to the model's coefficient matrix, available for linear models but not for NB without additional computation.
-
-results: Best model LinearSVC (CalibratedClassifierCV) — accuracy 98.89%, macro F1 0.989 across 22 languages. Easiest to detect: Arabic, Dutch, Swedish (F1 = 1.000). Hardest: English (F1 = 0.940, precision 0.896) — most generic Latin-script language, lacks diacritics, shares patterns with French and Spanish. Top Spanish n-grams: "que", "es", "ció". Arabic script characters give zero overlap against Latin/Cyrillic/CJK languages.
+results: "Best model LinearSVC (CalibratedClassifierCV) — accuracy 98.89%, macro F1 0.989 across 22 languages. Easiest to detect: Arabic, Dutch, Swedish (F1 = 1.000). Hardest: English (F1 = 0.940, precision 0.896). Top Spanish n-grams: que, es, ció. Arabic script characters give zero overlap against Latin/Cyrillic/CJK languages."
