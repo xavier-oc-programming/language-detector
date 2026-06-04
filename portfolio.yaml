@@ -15,6 +15,8 @@ full_description: |
   Three classifiers are compared — LinearSVC, LogisticRegression, and ComplementNB — consistent with the approach in the spam classifier project. The best model is selected by macro F1 across all 22 languages.
 
   Every detection response includes a plain-English explanation of the top character n-grams driving the result. This follows the same translation-layer pattern used in shap_to_language.py (telco churn), text_explainer.py (spam classifier), and risk_explainer.py (credit risk).
+
+  The API is deployed to Azure App Service (F1 tier) with a GitHub Actions CI/CD pipeline — tests run on every push to main, and a passing test suite triggers automatic deployment via publish profile.
 problem: Building a language classifier that not only identifies the language but explains which character patterns drove the decision — making the model's internal logic visible to non-technical users.
 solution: TF-IDF character n-grams (char_wb, unigrams to trigrams) vectorize the text. Three classifiers are trained and compared by macro F1. explainer.py extracts the top-weighted n-grams from the model's coefficient matrix for the predicted language and translates them into plain English.
 challenges: Getting calibrated probability scores from LinearSVC requires wrapping it in CalibratedClassifierCV — LinearSVC has no native predict_proba. The explanation layer requires access to the model's coefficient matrix, available for linear models but not for NB without additional computation.
